@@ -1,3 +1,7 @@
+# import os
+# from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
+# from sqlalchemy.orm import declarative_base
+# from dotenv import load_dotenv
 import os
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
@@ -15,7 +19,7 @@ db_name = os.getenv("DB_NAME") or os.getenv("POSTGRES_DB", "")
 DEFAULT_LOCAL_URL = f"postgresql://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}"
 DATABASE_URL = os.getenv("DATABASE_URL", DEFAULT_LOCAL_URL)
 
-engine = create_engine(DATABASE_URL)
+engine = create_engine(DATABASE_URL, echo=True)
 session_local = sessionmaker(autoflush=False, autocommit=False, bind=engine)
 Base = declarative_base()
 

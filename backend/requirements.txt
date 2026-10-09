@@ -1,11 +1,15 @@
 fastapi
 uvicorn[standard]
 sqlalchemy
-psycopg2-binary
+sqlalchemy[asyncio]
 pydantic
 python-dotenv
 python-multipart
 PyJWT
 pwdlib[argon2]
 argon2-cffi
+asyncpg
+psycopg[binary]
+greenlet
+
 # aiogram>=3.0.0

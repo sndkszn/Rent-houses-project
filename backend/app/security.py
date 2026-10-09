@@ -8,8 +8,8 @@ from fastapi.security import OAuth2PasswordBearer
 from pwdlib import PasswordHash
 from sqlalchemy.orm import Session
 
-import models
-from database import session_local, get_db
+import app.models as models
+from app.database import session_local, get_db
 
 SECRET_KEY = os.getenv("SECRET_KEY")
 ALGORITHM = "HS256"

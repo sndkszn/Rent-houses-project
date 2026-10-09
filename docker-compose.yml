@@ -20,7 +20,9 @@ services:
       retries: 5
 
   backend:
-    build: .
+    build:
+      context: ./backend
+      dockerfile: Dockerfile 
     container_name: backend
     restart: always
     ports:
@@ -28,13 +30,14 @@ services:
     env_file:
       - .env
     environment:
-      - DATABASE_URL=postgresql://${DB_USER}:${DB_PASSWORD}@db:5432/${DB_NAME}
+      - DATABASE_URL=postgresql://${DB_USER}:${DB_PASSWORD}@db:5432/${DB_NAME} #+asyncpg - async
     depends_on:
       db:
         condition: service_healthy
     volumes:
-      - .:/main
-    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+      - ./backend:/main
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+
 
   # bot:
   #   build: .
@@ -43,14 +46,13 @@ services:
   #   env_file:
   #     - .env
   #   environment:
-  #     - DATABASE_URL=postgresql://${DB_USER}:${DB_PASSWORD}@db:5432/${DB_NAME}
+  #     - DATABASE_URL=postgresql+asyncpg://${DB_USER}:${DB_PASSWORD}@db:5432/${DB_NAME}
   #   depends_on:
   #     db:
   #       condition: service_healthy
   #   volumes:
   #     - .:/main
   #   command: python bot.py
-
 
 volumes:
   postgres_data:

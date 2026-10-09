@@ -2,7 +2,7 @@
 #from functools import lru_cache
 from fastapi import FastAPI, HTTPException, Depends, status
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm # type: ignore
 from sqlalchemy.orm import Session
 from typing import List, Annotated, Dict
 from decimal import Decimal
@@ -10,13 +10,13 @@ from fastapi import Query
 from datetime import datetime, timedelta
 
 
-from schemas import (UserCreate, UserResponse, Token,PostBase, PostResponse, FeedbackCreate, FeedbackUpdate,
+from app.schemas import (UserCreate, UserResponse, Token,PostBase, PostResponse, FeedbackCreate, FeedbackUpdate,
 FeedbackResponse, MessageResponse, UserBalance,BasketResponse, BasketPostResponse, PostUpdate)
-import models
-from models import User, Post, Basket, Rental
-import security
-import database
-from database import get_db
+import app.models as models
+from app.models import User, Post, Basket, Rental
+import app.security as security
+import app.database as database
+from app.database import get_db
 
 database.Base.metadata.create_all(bind=database.engine)
 

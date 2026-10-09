@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer, String,ForeignKey, DateTime, UniqueConstraint, Numeric, CheckConstraint
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship, selectinload
 from sqlalchemy.sql import func
-from database import Base
+from app.database import Base
 from datetime import datetime
 
 class User(Base):
@@ -24,8 +24,18 @@ class Post(Base):
     price = Column(Numeric(20, 2), nullable=False)
     author_id = Column(Integer, ForeignKey("users.id"))
     
-    basket = relationship("Basket", back_populates="post",cascade="all, delete-orphan")
-    author = relationship("User", back_populates="posts")
+    basket = relationship(
+        "Basket",
+        back_populates="post",
+        cascade="all, delete-orphan"
+    )
+
+    author = relationship(
+        "User",
+        back_populates="posts",
+        lazy="selectin"
+    )
+    
     rentals = relationship("Rental", back_populates="post")
     feedback = relationship("Feedback", back_populates="post")
 
